@@ -1,0 +1,114 @@
+import java.lang.ref.Reference;
+import java.sql.Ref;
+import java.util.Arrays;
+import java.util.Random;
+
+
+public class Sort {
+
+	
+	public static int[] generateRandomArray(){
+		int randomArray[] = new int[10];
+		
+		for (int i = 0; i < randomArray.length ; i++){
+			randomArray[i] =  (int)(Math.random() * 100);
+		}
+		
+		return randomArray;
+	}
+	
+	public static void selectionSort(final int[] array){
+		
+		for(int i = 0; i < array.length - 1; i++){
+			int smallest = array[i];
+			int smallestIndex = i;
+			for(int j = i+1; j < array.length; j++){
+				if(array[j] < smallest){
+					smallest = array[j];
+					smallestIndex = j;
+				}
+			}
+			
+			int temp = array[i];
+			array[i] = array[smallestIndex];
+			array[smallestIndex] = temp;
+		}
+	}
+	
+	public static void insertionSort(final int[] array){
+		for(int i = 0; i < array.length; i++){
+			int key = array[i];
+			int j = i-1;
+			while(j >= 0 && array[j] > key){
+				array[j + 1] = array[j];
+				j--;
+			}
+			array[j + 1] = key;
+		}
+	}
+	
+	public static void mergeSort(final int[] array, int p, int r){
+		if(p>=r)
+			return;
+		
+		
+		int q = (p+r)/2;
+		
+		mergeSort(array, p, q);
+		
+		mergeSort(array, q+1, r);
+		
+		merge(array, p, q, r);
+		
+		
+		
+	}
+	
+	private static void merge(final int[] array, int p, int q, int r){
+		
+		
+		
+		int arrayFront[] = new int[q-p+2];
+		int arrayBack[] = new int[r-q + 1]; 
+		
+		for(int i = 0 ; i < q - p + 1; i++){ // copy from p to q, include p and q
+			arrayFront[i] = array[i + p];
+		}
+		for(int i = 0; i < r - q; i++){ // copy form q+1 to r (include q+1 and r)
+			arrayBack[i] = array[i + q + 1];
+		}
+		
+		arrayFront[arrayFront.length - 1] = Integer.MAX_VALUE;
+		arrayBack[arrayBack.length - 1] = Integer.MAX_VALUE;
+		
+//		System.out.print("\n");
+//		System.out.print("p = " + p + " q = " + q + " r = " + r);
+//		System.out.print("\n");
+//		for (int i : array) {
+//			System.out.print(i);
+//			System.out.print(", ");
+//		}
+//		System.out.print("\n");
+		
+		for(int k = p, i = 0, j = 0 ; k <= r ;k++){
+			if(arrayFront[i] <= arrayBack[j]){
+				array[k] = arrayFront[i];
+				i++;
+			}
+			else{
+				array[k] = arrayBack[j];
+				j++;
+			}
+		}
+//		for (int i : array) {
+//			System.out.print(i);
+//			System.out.print(", ");
+//		}
+//		System.out.print("\n");
+	}
+	
+	
+	public static void quickSort(final int[] array){
+		
+	}
+}
