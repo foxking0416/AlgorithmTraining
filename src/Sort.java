@@ -65,9 +65,6 @@ public class Sort {
 	}
 	
 	private static void merge(final int[] array, int p, int q, int r){
-		
-		
-		
 		int arrayFront[] = new int[q-p+2];
 		int arrayBack[] = new int[r-q + 1]; 
 		
@@ -108,7 +105,36 @@ public class Sort {
 	}
 	
 	
-	public static void quickSort(final int[] array){
+	public static void quickSort(final int[] array, int p, int r){
+		if(p>=r)
+			return;
 		
+		int q = partition(array, p, r);
+		
+		quickSort(array, p, q-1);
+		
+		quickSort(array, q+1, r);
+		
+		
+	}
+	
+	private static int partition(final int[] array, int p, int r){
+		int q = p;
+		
+		for(int u = p; u < r; u++){
+			if(array[u] <= array[r]){
+				int temp = array[q];//swap array[q] with array[u]
+				array[q] = array[u];
+				array[u] = temp;
+				q++;
+			}
+		}
+		
+		
+		int temp = array[q];
+		array[q] = array[r];
+		array[r] = temp;
+		
+		return q;
 	}
 }

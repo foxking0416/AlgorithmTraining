@@ -21,7 +21,8 @@ public class Algorithm {
 		
 //		Sort.selectionSort(array);
 //		Sort.insertionSort(array);
-		Sort.mergeSort(array, 0, array.length-1);
+//		Sort.mergeSort(array, 0, array.length-1);
+		Sort.quickSort(array, 0, array.length-1);
 		for (int i : array) {
 			System.out.print(i);
 			System.out.print(", ");
