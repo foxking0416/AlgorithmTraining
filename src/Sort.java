@@ -47,6 +47,7 @@ public class Sort {
 		}
 	}
 	
+	//Merge Sort
 	public static void mergeSort(final int[] array, int p, int r){
 		if(p>=r)
 			return;
@@ -64,6 +65,7 @@ public class Sort {
 		
 	}
 	
+	//Called by Merge Sort
 	private static void merge(final int[] array, int p, int q, int r){
 		int arrayFront[] = new int[q-p+2];
 		int arrayBack[] = new int[r-q + 1]; 
@@ -118,6 +120,7 @@ public class Sort {
 		
 	}
 	
+	//Called by Quick Sort
 	private static int partition(final int[] array, int p, int r){
 		int q = p;
 		

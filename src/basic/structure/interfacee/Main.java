@@ -1,6 +1,6 @@
-package interfaceTest;
+package basic.structure.interfacee;
 
-public class Test {
+public class Main {
 
 	public static void main(String[] args) {
 		for(int i = 0; i < 10; i++) {

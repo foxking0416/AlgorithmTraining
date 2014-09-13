@@ -1,4 +1,4 @@
-package interfaceTest;
+package basic.structure.interfacee;
 
 public class Human implements Whistle{
 

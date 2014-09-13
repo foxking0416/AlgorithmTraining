@@ -1,7 +1,7 @@
+package datastructure.binarytree;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import org.omg.CORBA.portable.ValueBase;
 
 
 public class BinaryTree {
@@ -238,7 +238,7 @@ public class BinaryTree {
 	//Breadth First Traverse method
 	public void breadthFirstTraverse(Node rNode){
 		
-		Queue<Node> queue = new LinkedList();
+		Queue<Node> queue = new LinkedList<Node>();
 		
 		
 		while(rNode != null){
