@@ -1,13 +1,9 @@
 package algorithm.string;
 
-import java.util.Enumeration;
-
-
 
 public class Transform {
 	private String strX;
 	private String strY;
-	private String strLCS;
 	private int[][] tableCost;
 	private int[][] tableOperation;
 	
@@ -15,7 +11,6 @@ public class Transform {
 	private int insertCost = 2;
 	private int copyCost = -1;
 	private int replaceCost = 1;
-	//private enum Operation {delete, insert, replace, copy}
 	
 	
 	public Transform(String strx, String stry){

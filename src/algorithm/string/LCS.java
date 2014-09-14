@@ -4,7 +4,6 @@ public class LCS {
 
 	private String strX;
 	private String strY;
-	private String strLCS;
 	private int[][] table; 
 	
 	public LCS(String strx, String stry){
@@ -59,7 +58,4 @@ public class LCS {
 			return lcs;
 		}
 	}
-	
-	
-	
 }
