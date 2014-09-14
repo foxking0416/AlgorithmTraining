@@ -9,6 +9,10 @@ Including:
   - Merge Sort
   - Quick Sort
   
+- String
+ - LCS
+ - Transfomation
+
 - Binary Tree
   - Insert
   - Remove
