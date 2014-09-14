@@ -4,11 +4,11 @@ This is my algorithm training wrote in JAVA.
 
 Including:
 
--Sorting
-  -Selection Sort
-  -Insertion Sort
-  -Merge Sort
-  -Quick Sort
+- Sorting
+  - Selection Sort
+  - Insertion Sort
+  - Merge Sort
+  - Quick Sort
   
 -Binary Tree
   -Insert
