@@ -3,6 +3,7 @@ AlgorithmTraining
 This is my algorithm training wrote in JAVA.
 
 Including:
+
 -Sorting
   -Selection Sort
   -Insertion Sort
