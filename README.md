@@ -20,4 +20,14 @@ Including:
   *In-order Traverse
   *Breadth First Traverse
   
+-AVL Tree
+  *Insert
+  *Remove
+  *Checkbalance
+  *Rotation
+  
+-Heap (Min/Max)
+  *Insert
+  *Remove
+  *Contain
 -Interface Test
