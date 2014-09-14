@@ -31,7 +31,21 @@ public class Main {
 //			System.out.print(value + ",");
 //		}
 		
-		
+		//                         50
+		//                  /-------------\
+		//                 /               \
+		//                /                 \
+		//               /                   \
+		//              25                   75
+		//             /  \                 /  \
+		//            /    \               /    \
+		//           /      \             /      \
+		//          15      40           69      83
+		//         /  \    /  \         /        / \
+		//        /    \  /    \       /        /   \  
+		//        1   17 39    48     53       77    99
+		//                    /  \   /        /
+		//                   45  49 50       76
 		Node rootNode = new Node(50);
 		Node node1 = new Node(25);
 		Node node2 = new Node(75);
@@ -69,6 +83,9 @@ public class Main {
 		binaryTree.insert(node16);
 		binaryTree.insert(node17);
 		
+		System.out.print("\n");
+		System.out.print("Height: ");	
+		System.out.print(binaryTree.height(node17));
 		
 		System.out.print("\n");
 		System.out.print("Preorder Traverse: ");

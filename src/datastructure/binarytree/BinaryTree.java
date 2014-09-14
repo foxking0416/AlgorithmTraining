@@ -107,6 +107,22 @@ public class BinaryTree {
 		}
 	}
 	
+	public int height(Node node){
+		
+		if(node == null)
+			return -1;
+		
+		int leftHeight = height(node.getLeftLeafNode());
+		int rightHeight = height(node.getRightLeafNode());
+		
+		if(leftHeight > rightHeight)
+			return leftHeight + 1;
+		else 
+			return rightHeight + 1;
+		
+		
+	}
+	
 	public boolean remove(Node removeNode){
 		Node nodeToRemoveNode =  findNode(this.rootNode, removeNode);
 		if(nodeToRemoveNode == null)
