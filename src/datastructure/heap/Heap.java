@@ -105,9 +105,61 @@ public class Heap {
 	}
 	
 	
-	public boolean contains(){
-		//TODO
+	public boolean containsInMinHeap(int value){		
+		int level = 0;
+		int startIndex = 0;
+		int totalElementCount = heapArrayMin.size();
 		
+		while (startIndex < totalElementCount) {
+			int count = 0;
+			int node = (int) Math.pow(2, level);
+			startIndex = node - 1;
+			int endIndex = node + startIndex;
+			
+			while (startIndex < totalElementCount && startIndex < endIndex) {
+				if(heapArrayMin.get(startIndex) == value){
+					return true;
+				}
+				else if(heapArrayMin.get(startIndex) > value){
+					++count;
+				}
+				++startIndex;
+			}
+			
+			if(count == node){
+				return false;
+			}
+			++level; 
+		}
+		return false;
+	}
+	
+	public boolean containsInMaxHeap(int value){		
+		int level = 0;
+		int startIndex = 0;
+		int totalElementCount = heapArrayMax.size();
+		
+		while (startIndex < totalElementCount) {
+			int count = 0;
+			int node = (int) Math.pow(2, level);
+			startIndex = node - 1;
+			int endIndex = node + startIndex;
+			
+			while (startIndex < totalElementCount && startIndex < endIndex) {
+				if(heapArrayMax.get(startIndex) == value){
+					return true;
+				}
+				else if(heapArrayMax.get(startIndex) < value){
+					++count;
+				}
+				++startIndex;
+			}
+			
+			if(count == node){
+				return false;
+			}
+			++level; 
+		}
 		return false;
 	}
 	

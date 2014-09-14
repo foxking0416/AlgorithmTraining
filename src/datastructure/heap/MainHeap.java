@@ -1,6 +1,6 @@
 package datastructure.heap;
 
-public class Main {
+public class MainHeap {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -20,6 +20,9 @@ public class Main {
 		heap.insertToMinHeap(22);
 		heap.insertToMinHeap(1);
 		heap.insertToMinHeap(17);
+
+		boolean contain = heap.containsInMinHeap(8);
+		System.out.print("Contain : " + contain + "\n" );
 		
 		heap.insertToMaxHeap(15);
 		heap.insertToMaxHeap(11);

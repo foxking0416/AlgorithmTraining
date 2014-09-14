@@ -4,7 +4,7 @@ package datastructure.binarytree;
 
 import java.util.ArrayList;
 
-public class Main {
+public class MainBST {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

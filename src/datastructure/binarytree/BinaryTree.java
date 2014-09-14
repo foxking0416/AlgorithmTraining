@@ -6,15 +6,15 @@ import java.util.Queue;
 
 public class BinaryTree {
 	
-	Node rootNode;
-	int count;
+	protected Node rootNode;
+	protected int count;
 	
 	public BinaryTree(){
 		count = 0;
 	}
 	
 	
-	void insert(Node newNode){
+	public void insert(Node newNode){
 		if(rootNode == null){
 			this.rootNode = newNode;
 		}
@@ -24,7 +24,7 @@ public class BinaryTree {
 		count++;
 	}
 	
-	private void insertNode(Node currentNode, Node newNode){
+	protected void insertNode(Node currentNode, Node newNode){
 		if(newNode.value < currentNode.value){
 			if(currentNode.getLeftLeafNode() == null){
 				currentNode.setLeftLeafNode(newNode);
@@ -123,10 +123,10 @@ public class BinaryTree {
 		
 	}
 	
-	public boolean remove(Node removeNode){
+	public void remove(Node removeNode){
 		Node nodeToRemoveNode =  findNode(this.rootNode, removeNode);
 		if(nodeToRemoveNode == null)
-			return false;
+			return;
 		
 		Node parentNode = findParentNode(removeNode, this.rootNode);
 		if(count == 1)
@@ -189,8 +189,7 @@ public class BinaryTree {
 			}
 		}
 		
-		return false;
-
+		--count;
 	}
 
 	public Node findParentNode(Node node, Node rNode){

@@ -1,19 +1,179 @@
 package datastructure.avltree;
+import java.util.ArrayList;
+import java.util.Stack;
+
 import datastructure.binarytree.*;
 
-public class AVLTree {
+public class AVLTree extends BinaryTree {
+	
 
+	
+	@Override
+ 	protected void insertNode(Node currentNode, Node newNode){
+		if(newNode.value < currentNode.value){
+			if(currentNode.getLeftLeafNode() == null){
+				currentNode.setLeftLeafNode(newNode);
+			}
+			else {
+				insertNode(currentNode.getLeftLeafNode(), newNode);
+			}
+		}
+		else{
+			if(currentNode.getRightLeafNode() == null){
+				currentNode.setRightLeafNode(newNode);
+			}
+			else {
+				insertNode(currentNode.getRightLeafNode(), newNode);
+			}
+		}
+		
+		checkBalance(currentNode);
+	}
+	
+	
+	@Override
+	public void remove(Node removeNode){
+		Node nodeToRemoveNode =  this.rootNode;//findNode(this.rootNode, removeNode);
+		Node parentNode = null;
+		//ArrayList<Node> pathStack = new ArrayList<Node>(); 
+		Stack<Node> pathStack = new Stack<Node>();
+		pathStack.add(this.rootNode);
+		
+		while(nodeToRemoveNode != null && nodeToRemoveNode != removeNode){
+			parentNode = nodeToRemoveNode;
+			if(removeNode.value < nodeToRemoveNode.value){
+				nodeToRemoveNode = parentNode.getLeftLeafNode();
+			}
+			else{
+				nodeToRemoveNode = parentNode.getRightLeafNode();
+			}
+			pathStack.push(nodeToRemoveNode);
+		}
+		
+		
+		
+		
+		
+		if(nodeToRemoveNode == null)
+			return;
+		
+		//parentNode = findParentNode(removeNode, this.rootNode);
+		
+		
+		if(count == 1)
+			this.rootNode = null;//remove the only one element of this tree
+		else{
+			if(nodeToRemoveNode.getLeftLeafNode() == null && nodeToRemoveNode.getRightLeafNode() == null){//remove the leaf node
+				if(nodeToRemoveNode.value < parentNode.value){
+					parentNode.setLeftLeafNode(null);
+				}
+				else {
+					parentNode.setRightLeafNode(null);
+				}
+			}
+			else if (nodeToRemoveNode.getLeftLeafNode() != null && nodeToRemoveNode.getRightLeafNode() == null){//remove the node with only left leaf node
+				if(nodeToRemoveNode.value < parentNode.value){
+					parentNode.setLeftLeafNode(nodeToRemoveNode.getLeftLeafNode());
+				}
+				else{
+					parentNode.setRightLeafNode(nodeToRemoveNode.getLeftLeafNode());
+				}
+			}
+			else if (nodeToRemoveNode.getLeftLeafNode() == null && nodeToRemoveNode.getRightLeafNode() != null){//remove the node with only right leaf node
+				if(nodeToRemoveNode.value < parentNode.value){
+					parentNode.setLeftLeafNode(nodeToRemoveNode.getRightLeafNode());
+				}
+				else{
+					parentNode.setRightLeafNode(nodeToRemoveNode.getRightLeafNode());
+				}	
+			}
+			else{//remove the node with two leaf nodes
+				Node largestNodeFromLeft = nodeToRemoveNode.getLeftLeafNode();
+				while(largestNodeFromLeft.getRightLeafNode() != null){
+					largestNodeFromLeft = largestNodeFromLeft.getRightLeafNode();
+				}
+				
+				
+				Node tempParent = findParentNode(largestNodeFromLeft, this.rootNode);
+
+				
+				largestNodeFromLeft.setRightLeafNode(nodeToRemoveNode.getRightLeafNode());
+				if(largestNodeFromLeft.value < tempParent.value){
+					largestNodeFromLeft.setLeftLeafNode(nodeToRemoveNode.getLeftLeafNode().getLeftLeafNode());	
+				}
+				else{
+					largestNodeFromLeft.setLeftLeafNode(nodeToRemoveNode.getLeftLeafNode());	
+					tempParent.setRightLeafNode(null);
+				}
+				
+				if(parentNode != null){
+					if(nodeToRemoveNode.value < parentNode.value){
+						parentNode.setLeftLeafNode(largestNodeFromLeft);
+					}
+					else{
+						parentNode.setRightLeafNode(largestNodeFromLeft);
+					}
+				}
+				else{
+					this.rootNode = largestNodeFromLeft;
+				}
+			}
+		}
+		
+		while(pathStack.size() > 0){
+			checkBalance(pathStack.pop());
+		}
+		--count;
+	}
+	
+	
+	public void checkBalance(Node node){
+			
+		if(height(node.getLeftLeafNode()) - height(node.getRightLeafNode()) > 1){
+			Node parentNode = findParentNode(node, this.rootNode);
+			if(height(node.getLeftLeafNode().getLeftLeafNode()) > height(node.getLeftLeafNode().getRightLeafNode())){
+				rightRotation(node, parentNode);
+			}
+			else{
+				leftAndRightRotation(node, parentNode);
+			}
+		}
+		else if(height(node.getLeftLeafNode()) - height(node.getRightLeafNode()) < -1){
+			Node parentNode = findParentNode(node, this.rootNode);
+			if(height(node.getRightLeafNode().getRightLeafNode()) > height(node.getRightLeafNode().getLeftLeafNode())){
+				leftRotation(node, parentNode);
+			}
+			else{
+				rightAndLeftRotation(node, parentNode);
+			}
+		}
+	}
+	
 	//     Q                           P
 	//    / \                         / \
 	//   P   C   ==>   P   Q    ==>  A   Q
 	//  / \           / \ / \           / \
 	// A   B         A   B   C         B   C
-	public void rightRotation(Node node){
-		if(node.getLeftLeafNode() == null)
+	public void rightRotation(Node nodeQ, Node parentNode){
+		if(nodeQ.getLeftLeafNode() == null)
 			return;
 		
-		node.setLeftLeafNode(node.getLeftLeafNode().getRightLeafNode());
-		node.getLeftLeafNode().setRightLeafNode(node);
+		Node nodeP = nodeQ.getLeftLeafNode();
+		
+		nodeQ.setLeftLeafNode(nodeP.getRightLeafNode());
+		nodeP.setRightLeafNode(nodeQ);
+		
+		if(parentNode == null){
+			this.rootNode = nodeP;
+		}
+		else{
+			if(nodeQ.value < parentNode.value){
+				parentNode.setLeftLeafNode(nodeP);
+			}
+			else{
+				parentNode.setRightLeafNode(nodeP);
+			}
+		}
 	}
 	
 	//     P                           Q
@@ -21,48 +181,23 @@ public class AVLTree {
 	//   A   Q   ==>   P   Q    ==>  P   C
 	//      / \       / \ / \       / \
 	//     B   C     A   B   C     A   B 
-	public void leftRotation(Node node){
-		if(node.getRightLeafNode() == null)
+	public void leftRotation(Node nodeP, Node parentNode){
+		if(nodeP.getRightLeafNode() == null)
 			return;
+		Node nodeQ = nodeP.getRightLeafNode();
 		
-		node.setRightLeafNode(node.getRightLeafNode().getLeftLeafNode());
-		node.getRightLeafNode().setLeftLeafNode(node);
-	}
-	
-	public int height(Node node){
+		nodeP.setRightLeafNode(nodeQ.getLeftLeafNode());
+		nodeQ.setLeftLeafNode(nodeP);
 		
-		if(node == null)
-			return -1;
-		
-		int leftHeight = height(node.getLeftLeafNode());
-		int rightHeight = height(node.getRightLeafNode());
-		
-		if(leftHeight > rightHeight)
-			return leftHeight + 1;
-		else 
-			return rightHeight + 1;
-		
-		
-	}
-	
-	
-	
-	public void checkBalance(Node node){
-			
-		if(height(node.getLeftLeafNode()) - height(node.getRightLeafNode()) > 1){
-			if(height(node.getLeftLeafNode().getLeftLeafNode()) > height(node.getLeftLeafNode().getRightLeafNode())){
-				rightRotation(node);
-			}
-			else{
-				leftAndRightRotation(node);
-			}
+		if(parentNode == null){
+			this.rootNode = nodeQ;
 		}
-		else if(height(node.getLeftLeafNode()) - height(node.getRightLeafNode()) < -1){
-			if(height(node.getRightLeafNode().getRightLeafNode()) > height(node.getRightLeafNode().getLeftLeafNode())){
-				leftRotation(node);
+		else{
+			if(nodeP.value < parentNode.value){
+				parentNode.setLeftLeafNode(nodeQ);
 			}
 			else{
-				rightAndLeftRotation(node);
+				parentNode.setRightLeafNode(nodeQ);
 			}
 		}
 	}
@@ -74,13 +209,20 @@ public class AVLTree {
 	//   A   B         P   B             P   Y           P   Y   C      A   X Y   C
 	//      / \       / \ / \           / \             / \
 	//     X   Y     A   X   Y         A   X           A   X
-	public void leftAndRightRotation(Node node){
-		leftRotation(node.getLeftLeafNode());
-		rightRotation(node);
+	public void leftAndRightRotation(Node node, Node parentNode){
+		leftRotation(node.getLeftLeafNode(), parentNode);
+		rightRotation(node, parentNode);
 	}
 	
-	public void rightAndLeftRotation(Node node){
-		rightRotation(node.getRightLeafNode());
-		leftRotation(node);
+	//       P             P                 P                               B
+	//      / \           / \               / \                            /   \
+	//     A   Q   ==>   A   \  ==>        A   B   ==>     P   B    ==>   P     Q      
+	//        / \             \               / \         / \ / \        / \   / \
+	//       B   C         B   Q             X   Q       A   X   Q      A   X Y   C
+	//      / \           / \ / \               / \             / \
+	//     X   Y         X   Y   C             Y   C           Y   C
+	public void rightAndLeftRotation(Node node, Node parentNode){
+		rightRotation(node.getRightLeafNode(), parentNode);
+		leftRotation(node, parentNode);
 	}
 }
