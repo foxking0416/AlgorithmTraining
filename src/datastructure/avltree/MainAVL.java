@@ -9,6 +9,13 @@ public class MainAVL {
 	}
 	
 	private static void testAVLTree(){
+	//  1       1           1               2            2           2               2
+	//	         \           \             / \          / \         / \             / \
+	//     ==>    2    ==>    2     ==>   1   3   ==>  1   3  ==>  1   3     ==>   1   4
+	//                         \                            \           \             / \
+	//                          3                            4           4           3   5
+	//                                                                    \
+	//                                                                     5
 		AVLTree tree = new AVLTree();
 		Node rootNode = new Node(1);
 		Node node1 = new Node(2);

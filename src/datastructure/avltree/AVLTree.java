@@ -33,9 +33,8 @@ public class AVLTree extends BinaryTree {
 	
 	@Override
 	public void remove(Node removeNode){
-		Node nodeToRemoveNode =  this.rootNode;//findNode(this.rootNode, removeNode);
+		Node nodeToRemoveNode =  this.rootNode;
 		Node parentNode = null;
-		//ArrayList<Node> pathStack = new ArrayList<Node>(); 
 		Stack<Node> pathStack = new Stack<Node>();
 		pathStack.add(this.rootNode);
 		
@@ -49,9 +48,6 @@ public class AVLTree extends BinaryTree {
 			}
 			pathStack.push(nodeToRemoveNode);
 		}
-		
-		
-		
 		
 		
 		if(nodeToRemoveNode == null)
