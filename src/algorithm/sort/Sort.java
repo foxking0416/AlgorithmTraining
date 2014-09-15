@@ -1,13 +1,7 @@
 package algorithm.sort;
-import java.lang.ref.Reference;
-import java.sql.Ref;
-import java.util.Arrays;
-import java.util.Random;
-
 
 public class Sort {
 
-	
 	public static int[] generateRandomArray(){
 		int randomArray[] = new int[10];
 		

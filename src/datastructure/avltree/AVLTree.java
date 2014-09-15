@@ -1,5 +1,4 @@
 package datastructure.avltree;
-import java.util.ArrayList;
 import java.util.Stack;
 
 import datastructure.binarytree.*;

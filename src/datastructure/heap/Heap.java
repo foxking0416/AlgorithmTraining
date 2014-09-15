@@ -46,7 +46,7 @@ public class Heap {
 		}
 	}
 	
-	
+	//Only remove the top element
 	public void removeFromMinHeap(){
 		int index = 0;
 		int count = heapArrayMin.size();

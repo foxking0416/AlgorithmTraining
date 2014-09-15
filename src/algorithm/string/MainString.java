@@ -4,8 +4,10 @@ public class MainString {
 	public static void main(String[] args) {
 		testLCS();
 		testTransform();
+		testMatching();
 	}
 	
+	//Find out the longest common subsequence
 	private static void testLCS(){
 		System.out.print("****LCS Test****" + "\n");
 		String strX = "CATCGA";
@@ -21,6 +23,9 @@ public class MainString {
 		System.out.print("\n");
 	}
 	
+	
+	//Test the function that transform the strX to strY
+	//The lower cost means these two string are more similar
 	private static void testTransform(){
 
 		System.out.print("****Transform Test****" + "\n");
@@ -34,5 +39,18 @@ public class MainString {
 		
 		String strTransform = transform.assembleTransformation("", strX.length(), strY.length());
 		System.out.print("String after transform: " + strTransform + "\n");
+		System.out.print("\n");
+	}
+	
+	
+	private static void testMatching(){
+		System.out.print("****Matching Test****" + "\n");
+		
+		String text = "AAAABCAABCAA";
+		String pattern = "ABC";
+		
+		Matching match = new Matching(text, pattern);
+		match.createNextStateTable();
+		match.findMatch();
 	}
 }
