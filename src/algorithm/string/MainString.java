@@ -5,6 +5,7 @@ public class MainString {
 		testLCS();
 		testTransform();
 		testMatching();
+		testCrackInterview();
 	}
 	
 	//Find out the longest common subsequence
@@ -52,5 +53,20 @@ public class MainString {
 		Matching match = new Matching(text, pattern);
 		match.createNextStateTable();
 		match.findMatch();
+		System.out.print("\n");
 	}
+	
+	private static void testCrackInterview(){
+		System.out.print("****Cracking Interview Test****" + "\n");
+		boolean isUnique =	Test.determineUniqueChar("asbaf");
+		System.out.print("Test Unique: " + isUnique + "\n");
+		
+		boolean isUnique2 =	Test.determineUniqueChar2("aabvf");
+		System.out.print("Test Unique2: " + isUnique2 + "\n");
+		
+		String strReversed = Test.reverseCString("abcde");
+		System.out.print("Test Reversed String: " + strReversed + "\n");
+	}
+	
+	
 }
