@@ -131,9 +131,9 @@ public class MainLeet {
 	
 	private static void testMaxProfitIII(){
 		System.out.print("****Test Maximum Profit III****" + "\n");
-		int[] input = new int[]{3,3,5,0,0,3,1,4};
-		
-		int profit = LeetTest.maxProfitIII(input);
+		int[] input = new int[]{2,1,4,5,2,9,7};
+//		int[] input = new int[]{3,3,5,0,0,3,1,4};		
+		int profit = LeetTest.maxProfitIIII(input);
 		System.out.print("The maximum profit is " + profit + "\n");
 		System.out.print("\n");
 	}

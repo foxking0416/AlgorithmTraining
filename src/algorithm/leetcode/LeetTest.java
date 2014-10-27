@@ -613,41 +613,76 @@ public class LeetTest {
     public static int maxProfitIII(int[] prices) {
 
     	int maxLose = 0;
-    	int lose = 0;
-    	int profit = 0;
+
+    	int valley = prices[0];
+    	int peak = prices[prices.length-1];
+
+    	int historyProfit[] = new int[prices.length];
+    	int futureProfit[] = new int[prices.length];
     	int maxProfit = 0;
-    	boolean loseFromStart = false;
-    	for(int i = 0; i < prices.length-1; ++i){
+    	for(int i = 0; i < prices.length; ++i){
+    		valley = Math.min(valley, prices[i]);
     		
-    		if(prices[1] < prices[0])
-    			loseFromStart = true;
-    		
-    		if(loseFromStart == true){
-    			if( prices[i + 1] < prices[i])
-    				continue;
-    			else {
-    				loseFromStart = false;
-				}
-			}
-    		
-    		if(prices[i + 1] < prices[i]){
-    			
-    			lose += prices[i] - prices[i+1];
-    			
-    			if(i !=  prices.length-2 &&prices[i + 2] > prices[i + 1]){
-    				if(lose > maxLose)
-    					maxLose = lose;
-    				lose = 0;
-    			}
+    		if(i > 0){
+    			historyProfit[i] = Math.max(historyProfit[i-1], prices[i]- valley);
     		}
-   
-    		profit += prices[i + 1] - prices[i];
-    		if(profit < 0)
-    			profit = 0;
-    		else if(profit > maxProfit)
-				maxProfit = profit;
     	}
     	
-        return maxProfit - maxLose;
+    	for(int i = prices.length -1; i >= 0; --i ){
+    		peak = Math.max(peak, prices[i]);
+    		
+    		if(i < prices.length -1){
+    			futureProfit[i] = Math.max(futureProfit[i+1],peak-prices[i]);
+    		}
+    		maxProfit = Math.max(maxProfit,historyProfit[i]+futureProfit[i]);
+    	}
+    	
+        return maxLose;
+    }
+    
+    public static int maxProfitIIII(int[] prices) {
+    	
+    	int maxProfit = 0;
+
+    	int historyProfit[] = new int[prices.length];
+    	int futureProfit[] = new int[prices.length];
+    	int maxProfitForward = 0;
+    	int profitForward = 0;
+    	int maxProfitBackward = 0;
+    	int profitBackward = 0;
+    	for(int i = 0; i < prices.length-1; ++i){
+    		
+    		   
+    		profitForward += prices[i + 1] - prices[i];
+    		if(profitForward < 0)
+    			profitForward = 0;
+    		else if(profitForward > maxProfitForward)
+				maxProfitForward = profitForward;
+    		
+    		historyProfit[i+1] = maxProfitForward;
+    	}
+    	
+
+    
+    	
+    	for(int i = prices.length -1; i >= 1; --i ){
+    		
+    		profitBackward += prices[i] - prices[i-1];
+    		
+    		if(profitBackward < 0)
+    			profitBackward = 0;
+    		else if(profitBackward > maxProfitBackward)
+    			maxProfitBackward = profitBackward;
+    		futureProfit[i-1] = maxProfitBackward;
+
+    	}
+    	
+    	maxProfit = futureProfit[0] + historyProfit[0];
+    	for(int i = 1; i < prices.length; ++i){
+    		if(futureProfit[i] + historyProfit[i] > maxProfit)
+    			maxProfit = futureProfit[i] + historyProfit[i];
+    	}
+    	
+        return maxProfit;
     }
 }

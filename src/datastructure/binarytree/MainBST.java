@@ -121,6 +121,12 @@ public class MainBST {
 		System.out.print("Test Path Sum: " + binaryTree.hasPathSum(rootNode, 307));//Sequence will be from small to big
 		System.out.print("\n");
 		
+		System.out.print("\n");
+		System.out.print("Test Flatten: ");//Sequence will be from small to big
+		binaryTree.flatten(rootNode);
+		System.out.print("\n");		
+		
+		
 		int maxValue = binaryTree.findMax(rootNode);
 		int minValue = binaryTree.findMin(rootNode);
 		Node pNode = binaryTree.findParentNode(node9, rootNode);

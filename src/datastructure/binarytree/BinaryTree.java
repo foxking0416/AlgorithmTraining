@@ -635,4 +635,49 @@ public class BinaryTree {
     	return result;
     }
 
+    public static Node flatten(Node root){
+    	
+//    	Node right;
+//    	if(root.getRightLeafNode() != null )
+//    		right = root.getRightLeafNode();
+    	
+    	flattenHelper(root, null);
+    	
+//    	if(root.getLeftLeafNode() != null){}
+    	
+    	
+    		
+    	return root;
+    }
+    
+    private static Node flattenHelper(Node root, Node right){
+    	
+       	Node currentRight = null;
+    	if(root.getRightLeafNode() != null){
+    		currentRight = flattenHelper(root.getRightLeafNode(), right);
+    	
+    	}
+    	
+    	Node currentLeft = null;
+    	if(root.getLeftLeafNode() != null){
+    		if(currentRight != null)
+    			currentLeft = flattenHelper(root.getLeftLeafNode(), currentRight);
+    		else
+    			currentLeft = flattenHelper(root.getLeftLeafNode(), right);
+    		
+    	}
+    	
+    	if(currentLeft != null){
+    		root.setRightLeafNode(currentLeft);
+    		root.setLeftLeafNode(null);
+    	
+    	}
+    	
+    	if(currentLeft == null && currentRight == null)
+    		root.setRightLeafNode(right);
+    	return root;
+    	
+    }
+    
+    
 }
