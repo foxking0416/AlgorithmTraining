@@ -30,20 +30,20 @@ public class MainAVL {
 
 		
 		System.out.print("Preorder Traverse: ");
-		tree.preorderTraverse(tree.getRootNode());
+		tree.preorderTraverseRecursion(tree.getRootNode());
 		System.out.print("\n");
 		
 		System.out.print("Postorder Traverse: ");
-		tree.postorderTraverse(tree.getRootNode());
+		tree.postorderTraverseRecursion(tree.getRootNode());
 		System.out.print("\n");
 		
 		tree.remove(node3);
 		System.out.print("Preorder Traverse after removed: ");
-		tree.preorderTraverse(tree.getRootNode());
+		tree.preorderTraverseRecursion(tree.getRootNode());
 		System.out.print("\n");
 		
 		System.out.print("Postorder Traverse after removed: ");
-		tree.postorderTraverse(tree.getRootNode());
+		tree.postorderTraverseRecursion(tree.getRootNode());
 		System.out.print("\n");
 	}
 }

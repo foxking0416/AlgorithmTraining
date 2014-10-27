@@ -1,6 +1,13 @@
 package datastructure.binarytree;
+import java.awt.List;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
+
+import org.omg.CORBA.IRObject;
 
 
 
@@ -123,6 +130,27 @@ public class BinaryTree {
 		
 	}
 	
+	public int minDepth(Node rNode) {
+        if(rNode == null)
+        	return 0;
+        
+        if(rNode.getLeftLeafNode() == null && rNode.getRightLeafNode() == null)
+        	return 1;
+        else if(rNode.getLeftLeafNode() == null)
+        	return minDepth(rNode.getRightLeafNode()) + 1;
+        else if(rNode.getRightLeafNode() == null)
+        	return minDepth(rNode.getLeftLeafNode()) + 1;
+        
+        int leftHeight = minDepth(rNode.getLeftLeafNode());
+        int rightHeight = minDepth(rNode.getRightLeafNode());
+        
+        if(leftHeight < rightHeight)
+        	return leftHeight + 1;
+        else 
+			return rightHeight + 1;
+		
+    }
+	
 	public void remove(Node removeNode){
 		Node nodeToRemoveNode =  findNode(this.rootNode, removeNode);
 		if(nodeToRemoveNode == null)
@@ -167,13 +195,13 @@ public class BinaryTree {
 
 				
 				largestNodeFromLeft.setRightLeafNode(nodeToRemoveNode.getRightLeafNode());
-				if(largestNodeFromLeft.value < tempParent.value){
-					largestNodeFromLeft.setLeftLeafNode(nodeToRemoveNode.getLeftLeafNode().getLeftLeafNode());	
-				}
-				else{
+//				if(largestNodeFromLeft.value < tempParent.value){
+//					largestNodeFromLeft.setLeftLeafNode(nodeToRemoveNode.getLeftLeafNode().getLeftLeafNode());	
+//				}
+//				else{
 					largestNodeFromLeft.setLeftLeafNode(nodeToRemoveNode.getLeftLeafNode());	
 					tempParent.setRightLeafNode(null);
-				}
+//				}
 				
 				if(parentNode != null){
 					if(nodeToRemoveNode.value < parentNode.value){
@@ -223,21 +251,68 @@ public class BinaryTree {
 	}
 	
 	//Pre-Order Traverse method
-	public void preorderTraverse(Node rNode){
+	public void preorderTraverseRecursion(Node rNode){
 		if(rNode != null){
 			System.out.print(rNode.value + ",");
-			preorderTraverse(rNode.getLeftLeafNode());
-			preorderTraverse(rNode.getRightLeafNode());
+			preorderTraverseRecursion(rNode.getLeftLeafNode());
+			preorderTraverseRecursion(rNode.getRightLeafNode());
+		}
+	}
+	
+	public void preorderTraverseLoop(Node rNode){
+		ArrayList<Integer> array = new ArrayList<>();
+		
+		Stack<Node> myStack = new Stack<>();
+		myStack.push(rNode);
+		
+		while(myStack.isEmpty() != true){
+			Node node = myStack.pop();
+			
+			array.add(node.value);
+			if(node.getRightLeafNode() != null)
+				myStack.push(node.getRightLeafNode());
+			if(node.getLeftLeafNode() != null)
+				myStack.push(node.getLeftLeafNode());
+			
+		}
+		
+		for (int i =0; i < array.size(); ++i){
+			System.out.print(array.get(i) + ",");
 		}
 	}
 	
 	//Post-Order Traverse method
-	public void postorderTraverse(Node rNode){
+	public void postorderTraverseRecursion(Node rNode){
 		if(rNode != null){
 
-			postorderTraverse(rNode.getLeftLeafNode());
-			postorderTraverse(rNode.getRightLeafNode());
+			postorderTraverseRecursion(rNode.getLeftLeafNode());
+			postorderTraverseRecursion(rNode.getRightLeafNode());
 			System.out.print(rNode.value + ",");
+		}
+	}
+	
+	public void postorderTraverseLoop(Node rNode){
+		ArrayList<Integer> array = new ArrayList<>();
+		
+		Stack<Node> treeStack = new Stack<>();
+		treeStack.push(rNode);
+		while(treeStack.empty() != true){
+			Node node = treeStack.pop();
+			array.add(node.value);
+			
+			if(node.getLeftLeafNode() != null)
+				treeStack.push(node.getLeftLeafNode());
+			if(node.getRightLeafNode() != null)
+				treeStack.push(node.getRightLeafNode());
+			
+		}
+		
+		ArrayList<Integer> returnList = new ArrayList<>();
+	
+		//Print element from end to start
+		for (int i = array.size()-1 ; i >= 0; --i) {
+			returnList.add(array.get(i));
+			//			System.out.print(array.get(i) + ",");
 		}
 	}
 	
@@ -247,6 +322,40 @@ public class BinaryTree {
 			inorderTraverse(rNode.getLeftLeafNode());
 			System.out.print(rNode.value + ",");
 			inorderTraverse(rNode.getRightLeafNode());
+		}
+	}
+	
+	public void inorderTraverseLoop(Node rNode){
+		
+		HashMap<Node, Boolean> myHashtable = new HashMap<>();
+		ArrayList<Integer> array = new ArrayList<>();
+		
+		Stack<Node> treeStack = new Stack<>();
+		treeStack.push(rNode);
+		while(treeStack.empty() != true){
+			
+			Node node = treeStack.pop();
+			if(myHashtable.containsKey(node) || (node.getLeftLeafNode() == null && node.getRightLeafNode() == null)){
+				array.add(node.value);	
+			}else{
+				myHashtable.put(node, true);
+				
+				if(node.getRightLeafNode() != null)
+					treeStack.push(node.getRightLeafNode());
+				
+				treeStack.push(node);
+				
+
+				if(node.getLeftLeafNode() != null)
+					treeStack.push(node.getLeftLeafNode());
+			}
+		}
+		
+	
+		//Print element from end to start
+		for (int i = 0; i < array.size(); ++i) {
+			System.out.print(array.get(i) + ",");
+
 		}
 	}
 	
@@ -274,6 +383,256 @@ public class BinaryTree {
 			}
 		}
 	}
+		
+	//Level-Order Traverse method
+	public void levelOrderTraverse(Node rNode){
+
+		ArrayList<ArrayList<Integer>> array = new ArrayList<>();
+		if(rNode == null)
+		    return;
+		Queue<Node> currentLevel = new LinkedList<Node>();
+		Queue<Node> nextLevel = new LinkedList<Node>();
+		ArrayList<Integer> tempArray = new ArrayList<>();
+		
+		while(rNode != null){
+
+			tempArray.add(rNode.value);
+			
+			if(rNode.getLeftLeafNode() != null){
+				nextLevel.add(rNode.getLeftLeafNode());
+			}
+			if(rNode.getRightLeafNode() != null){
+				nextLevel.add(rNode.getRightLeafNode());
+			}
+
+			
+			if(currentLevel.isEmpty() == false){
+				rNode = currentLevel.poll();
+			}
+			else{
+				ArrayList<Integer> storeArray = new ArrayList<>();
+				System.out.print("[");
+				for(Integer i : tempArray){
+					storeArray.add(i);
+					System.out.print(i + ",");
+				}
+				System.out.print("]");				
+				array.add(storeArray);
+				tempArray.clear();
+				
+				if(nextLevel.isEmpty() == false){
+
+					for(Node n : nextLevel) {
+						currentLevel.add(n);
+				    }
+					
+					nextLevel.clear();
+					rNode = currentLevel.poll();
+				}
+				else{
+					break;
+				}
+			}
+
+		}
+	}
 	
+	//Zigzag-Order Traverse method
+	public void zigzagLevelOrderTraverse(Node rNode){
+
+		Stack<Node> currentLevel = new Stack<Node>();
+		Stack<Node> nextLevel = new Stack<Node>();
+		boolean leftToRight = true;
+		
+		while(rNode != null){
+			System.out.print(rNode.value + ",");
+			
+			if(leftToRight){
+				if(rNode.getLeftLeafNode() != null){
+					nextLevel.push(rNode.getLeftLeafNode());
+				}
+				if(rNode.getRightLeafNode() != null){
+					nextLevel.push(rNode.getRightLeafNode());
+				}
+			}else {
+				if(rNode.getRightLeafNode() != null){
+					nextLevel.push(rNode.getRightLeafNode());
+				}
+				if(rNode.getLeftLeafNode() != null){
+					nextLevel.push(rNode.getLeftLeafNode());
+				}
+			}
+
+
+			
+			if(currentLevel.isEmpty() == false){
+				rNode = currentLevel.pop();
+			}
+			else{
+				if(nextLevel.isEmpty() == false){
+					currentLevel = (Stack<Node>)nextLevel.clone();// = nextLevel;
+					
+					nextLevel.clear();
+					leftToRight = !leftToRight;
+					rNode = currentLevel.pop();
+				}
+				else{
+					break;
+				}
+			}
+
+		}
+	}
+
 	
+	public Node inorderSucc(Node n){
+		if(n == null)
+			return null;
+		
+		if(n.getRightLeafNode() != null){
+			return findTheMostLeftNode(n.getRightLeafNode());
+		}
+		else{
+			Node parentNode = findParentNode(n, this.rootNode);
+			
+			while (parentNode != null) {
+				if( n.value < parentNode.value){
+					break;
+				}
+				n = parentNode;
+				parentNode = findParentNode(n, this.rootNode);
+			}
+			
+			
+			return parentNode;
+		}
+		
+		
+		
+	}
+	
+	public Node findTheMostLeftNode(Node n){
+		
+		if(n.getLeftLeafNode() == null)
+			return n;
+		else 
+			return findTheMostLeftNode(n.getLeftLeafNode());
+	}
+	
+	public boolean cover(Node root, Node n){
+		if(root.equals(n))
+			return true;	
+		else{
+			boolean leftCover = false;
+			boolean rightCover = false;
+			if(root.getLeftLeafNode() != null)
+				leftCover = cover(root.getLeftLeafNode(), n);
+			if(root.getRightLeafNode() != null)
+				rightCover = cover(root.getRightLeafNode(), n);
+			
+			return (leftCover || rightCover);
+		}
+		
+//		return false;
+	}
+
+	public boolean isSameTree(Node p, Node q) {
+        
+		boolean result = true;
+		
+		if(p == null && q == null)
+			return true;
+		
+		result &= (p.value == q.value);
+		if(result == false)
+			return false;
+		
+		if(p.getLeftLeafNode() != null && q.getLeftLeafNode() != null)
+			result &= isSameTree(p.getLeftLeafNode(), q.getLeftLeafNode());
+		else if(p.getLeftLeafNode() == null && q.getLeftLeafNode() != null)
+			return false;
+		else if(p.getLeftLeafNode() != null && q.getLeftLeafNode() == null)
+			return false;		
+		
+		if(result == false)
+			return false;
+		
+		if(p.getRightLeafNode() != null && q.getRightLeafNode() != null)
+			result &= isSameTree(p.getRightLeafNode(), q.getRightLeafNode());
+		else if(p.getRightLeafNode() == null && q.getRightLeafNode() != null)
+			return false;
+		else if(p.getRightLeafNode() != null && q.getRightLeafNode() == null)
+			return false;
+		
+		return result;
+    }
+
+    public boolean hasPathSum(Node root, int sum) {
+        
+    	if(root.getLeftLeafNode() == null && root.getRightLeafNode() == null){
+    		if(sum == root.value)
+    			return true;
+    		else 
+				return false;
+    	}
+    	
+    	boolean resultLeft = false;
+    	boolean resultRight = false;
+    	
+    	if(root.getLeftLeafNode() != null){
+    		resultLeft = hasPathSum(root.getLeftLeafNode(), sum - root.value);
+    	}
+    	if(root.getRightLeafNode() != null){
+    		resultRight = hasPathSum(root.getRightLeafNode(), sum - root.value);
+    	}
+    	
+    	return (resultLeft | resultRight);
+    }
+    
+    public static boolean isSymmetric(Node root) {
+        
+    	if(root == null)
+    		return true;
+    	
+    	if(root.getLeftLeafNode() != null && root.getRightLeafNode() == null){
+    		return false;
+    	}
+    	if(root.getLeftLeafNode() == null && root.getRightLeafNode() != null){
+    		return false;
+    	}
+    	
+    	return symmetric(root.getLeftLeafNode(), root.getRightLeafNode());
+    }
+    
+    private static boolean symmetric(Node p, Node q){
+    	
+		boolean result = true;
+    	
+    	if(p == null && q == null)
+    		return true;
+    	
+		result &= (p.value == q.value);
+		if(result == false)
+			return false;
+		
+		if(p.getLeftLeafNode() != null && q.getRightLeafNode() != null)
+			result &= symmetric(p.getLeftLeafNode(), q.getRightLeafNode());
+		else if(p.getLeftLeafNode() == null && q.getRightLeafNode() != null)
+			return false;
+		else if(p.getLeftLeafNode() != null && q.getRightLeafNode() == null)
+			return false;	
+    	
+		if(result == false)
+			return false;
+		
+		if(p.getRightLeafNode() != null && q.getLeftLeafNode() != null)
+			result &= symmetric(p.getRightLeafNode(), q.getLeftLeafNode());
+		else if(p.getRightLeafNode() == null && q.getLeftLeafNode() != null)
+			return false;
+		else if(p.getRightLeafNode() != null && q.getLeftLeafNode() == null)
+			return false;
+    	
+    	return result;
+    }
+
 }

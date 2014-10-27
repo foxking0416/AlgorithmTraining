@@ -86,23 +86,54 @@ public class MainBST {
 		System.out.print("\n");
 		System.out.print("Height: ");	
 		System.out.print(binaryTree.height(node17));
-		
 		System.out.print("\n");
-		System.out.print("Preorder Traverse: ");
-		binaryTree.preorderTraverse(rootNode);
+		System.out.print("Minimum Depth: ");	
+		System.out.print(binaryTree.minDepth(node2));		
 		System.out.print("\n");
-		System.out.print("Postorder Traverse: ");
-		binaryTree.postorderTraverse(rootNode);
+		System.out.print("Preorder Traverse using recursive: ");
+		binaryTree.preorderTraverseRecursion(rootNode);
 		System.out.print("\n");
-		System.out.print("Inorder Traverse: ");//Sequence will be from small to big
+		System.out.print("Preorder Traverse using loop:      ");
+		binaryTree.preorderTraverseLoop(rootNode);
+		System.out.print("\n");
+		System.out.print("Postorder Traverse using recursive: ");
+		binaryTree.postorderTraverseRecursion(rootNode);
+		System.out.print("\n");
+		System.out.print("Postorder Traverse using loop:      ");
+		binaryTree.postorderTraverseRecursion(rootNode);
+		System.out.print("\n");
+		System.out.print("Inorder Traverse using recursive: ");//Sequence will be from small to big
 		binaryTree.inorderTraverse(rootNode);
+		System.out.print("\n");
+		System.out.print("Inorder Traverse using loop     : ");//Sequence will be from small to big
+		binaryTree.inorderTraverseLoop(rootNode);
 		System.out.print("\n");
 		System.out.print("Breadth First Traverse: ");//Sequence will be from small to big
 		binaryTree.breadthFirstTraverse(rootNode);
+		System.out.print("\n");
+		System.out.print("Level Order Traverse: ");//Sequence will be from small to big
+		binaryTree.levelOrderTraverse(rootNode);		
+		System.out.print("\n");
+		System.out.print("Zigzag Level Order Traverse: ");//Sequence will be from small to big
+		binaryTree.zigzagLevelOrderTraverse(rootNode);
+
+		System.out.print("\n");
+		System.out.print("Test Path Sum: " + binaryTree.hasPathSum(rootNode, 307));//Sequence will be from small to big
+		System.out.print("\n");
 		
 		int maxValue = binaryTree.findMax(rootNode);
 		int minValue = binaryTree.findMin(rootNode);
 		Node pNode = binaryTree.findParentNode(node9, rootNode);
+		
+		Node succNode = binaryTree.inorderSucc(node4);
+		System.out.print("\n");
+		System.out.print("Current Node = " +node4.value+ " Succint Node = " + succNode.value);
+		System.out.print("\n");
+		
+		System.out.print("\n");
+		System.out.print("Cover Test = " + binaryTree.cover(node5, node17));
+		System.out.print("\n");	
+		
 		
 		System.out.print("\n");
 		System.out.print("Min value = " + minValue);
@@ -116,7 +147,12 @@ public class MainBST {
 		rootNode = binaryTree.getRootNode();
 		System.out.print(rootNode.value);
 		System.out.print("\n");
-		binaryTree.preorderTraverse(rootNode);
-	
+		binaryTree.preorderTraverseLoop(rootNode);
+		
+		System.out.print("\n");
+		System.out.print("Test two tree identical: " + binaryTree.isSameTree(rootNode, rootNode));//Sequence will be from small to big
+		System.out.print("\n");
+		
+
 	}
 }

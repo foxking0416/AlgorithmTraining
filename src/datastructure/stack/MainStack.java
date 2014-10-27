@@ -5,7 +5,23 @@ import java.util.Stack;
 public class MainStack {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		testStack();
+//		testStack();
+//		testStoreMinInStack();
+		//testCreateMyQueueWithTwoStack();
+		testSortStack();
+	}
+	
+	private static void testStoreMinInStack(){
+		StackTest stackTest = new StackTest();
+		stackTest.storeMinTest();
+	}
+	
+	private static void testCreateMyQueueWithTwoStack(){
+		StackTest.createQueueTest();
+	}
+	
+	private static void testSortStack(){
+		StackTest.sortStackTest();
 	}
 	
 	private static void testStack(){
