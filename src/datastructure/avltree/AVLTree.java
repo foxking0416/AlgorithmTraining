@@ -8,8 +8,8 @@ public class AVLTree extends BinaryTree {
 
 	
 	@Override
- 	protected void insertNode(Node currentNode, Node newNode){
-		if(newNode.value < currentNode.value){
+ 	protected void insertNode(TreeNode currentNode, TreeNode newNode){
+		if(newNode.val < currentNode.val){
 			if(currentNode.getLeftLeafNode() == null){
 				currentNode.setLeftLeafNode(newNode);
 			}
@@ -31,15 +31,15 @@ public class AVLTree extends BinaryTree {
 	
 	
 	@Override
-	public void remove(Node removeNode){
-		Node nodeToRemoveNode =  this.rootNode;
-		Node parentNode = null;
-		Stack<Node> pathStack = new Stack<Node>();
+	public void remove(TreeNode removeNode){
+		TreeNode nodeToRemoveNode =  this.rootNode;
+		TreeNode parentNode = null;
+		Stack<TreeNode> pathStack = new Stack<TreeNode>();
 		pathStack.add(this.rootNode);
 		
 		while(nodeToRemoveNode != null && nodeToRemoveNode != removeNode){
 			parentNode = nodeToRemoveNode;
-			if(removeNode.value < nodeToRemoveNode.value){
+			if(removeNode.val < nodeToRemoveNode.val){
 				nodeToRemoveNode = parentNode.getLeftLeafNode();
 			}
 			else{
@@ -59,7 +59,7 @@ public class AVLTree extends BinaryTree {
 			this.rootNode = null;//remove the only one element of this tree
 		else{
 			if(nodeToRemoveNode.getLeftLeafNode() == null && nodeToRemoveNode.getRightLeafNode() == null){//remove the leaf node
-				if(nodeToRemoveNode.value < parentNode.value){
+				if(nodeToRemoveNode.val < parentNode.val){
 					parentNode.setLeftLeafNode(null);
 				}
 				else {
@@ -67,7 +67,7 @@ public class AVLTree extends BinaryTree {
 				}
 			}
 			else if (nodeToRemoveNode.getLeftLeafNode() != null && nodeToRemoveNode.getRightLeafNode() == null){//remove the node with only left leaf node
-				if(nodeToRemoveNode.value < parentNode.value){
+				if(nodeToRemoveNode.val < parentNode.val){
 					parentNode.setLeftLeafNode(nodeToRemoveNode.getLeftLeafNode());
 				}
 				else{
@@ -75,7 +75,7 @@ public class AVLTree extends BinaryTree {
 				}
 			}
 			else if (nodeToRemoveNode.getLeftLeafNode() == null && nodeToRemoveNode.getRightLeafNode() != null){//remove the node with only right leaf node
-				if(nodeToRemoveNode.value < parentNode.value){
+				if(nodeToRemoveNode.val < parentNode.val){
 					parentNode.setLeftLeafNode(nodeToRemoveNode.getRightLeafNode());
 				}
 				else{
@@ -83,17 +83,17 @@ public class AVLTree extends BinaryTree {
 				}	
 			}
 			else{//remove the node with two leaf nodes
-				Node largestNodeFromLeft = nodeToRemoveNode.getLeftLeafNode();
+				TreeNode largestNodeFromLeft = nodeToRemoveNode.getLeftLeafNode();
 				while(largestNodeFromLeft.getRightLeafNode() != null){
 					largestNodeFromLeft = largestNodeFromLeft.getRightLeafNode();
 				}
 				
 				
-				Node tempParent = findParentNode(largestNodeFromLeft, this.rootNode);
+				TreeNode tempParent = findParentNode(largestNodeFromLeft, this.rootNode);
 
 				
 				largestNodeFromLeft.setRightLeafNode(nodeToRemoveNode.getRightLeafNode());
-				if(largestNodeFromLeft.value < tempParent.value){
+				if(largestNodeFromLeft.val < tempParent.val){
 					largestNodeFromLeft.setLeftLeafNode(nodeToRemoveNode.getLeftLeafNode().getLeftLeafNode());	
 				}
 				else{
@@ -102,7 +102,7 @@ public class AVLTree extends BinaryTree {
 				}
 				
 				if(parentNode != null){
-					if(nodeToRemoveNode.value < parentNode.value){
+					if(nodeToRemoveNode.val < parentNode.val){
 						parentNode.setLeftLeafNode(largestNodeFromLeft);
 					}
 					else{
@@ -122,10 +122,10 @@ public class AVLTree extends BinaryTree {
 	}
 	
 	
-	public void checkBalance(Node node){
+	public void checkBalance(TreeNode node){
 			
 		if(height(node.getLeftLeafNode()) - height(node.getRightLeafNode()) > 1){
-			Node parentNode = findParentNode(node, this.rootNode);
+			TreeNode parentNode = findParentNode(node, this.rootNode);
 			if(height(node.getLeftLeafNode().getLeftLeafNode()) > height(node.getLeftLeafNode().getRightLeafNode())){
 				rightRotation(node, parentNode);
 			}
@@ -134,7 +134,7 @@ public class AVLTree extends BinaryTree {
 			}
 		}
 		else if(height(node.getLeftLeafNode()) - height(node.getRightLeafNode()) < -1){
-			Node parentNode = findParentNode(node, this.rootNode);
+			TreeNode parentNode = findParentNode(node, this.rootNode);
 			if(height(node.getRightLeafNode().getRightLeafNode()) > height(node.getRightLeafNode().getLeftLeafNode())){
 				leftRotation(node, parentNode);
 			}
@@ -149,11 +149,11 @@ public class AVLTree extends BinaryTree {
 	//   P   C   ==>   P   Q    ==>  A   Q
 	//  / \           / \ / \           / \
 	// A   B         A   B   C         B   C
-	public void rightRotation(Node nodeQ, Node parentNode){
+	public void rightRotation(TreeNode nodeQ, TreeNode parentNode){
 		if(nodeQ.getLeftLeafNode() == null)
 			return;
 		
-		Node nodeP = nodeQ.getLeftLeafNode();
+		TreeNode nodeP = nodeQ.getLeftLeafNode();
 		
 		nodeQ.setLeftLeafNode(nodeP.getRightLeafNode());
 		nodeP.setRightLeafNode(nodeQ);
@@ -162,7 +162,7 @@ public class AVLTree extends BinaryTree {
 			this.rootNode = nodeP;
 		}
 		else{
-			if(nodeQ.value < parentNode.value){
+			if(nodeQ.val < parentNode.val){
 				parentNode.setLeftLeafNode(nodeP);
 			}
 			else{
@@ -176,10 +176,10 @@ public class AVLTree extends BinaryTree {
 	//   A   Q   ==>   P   Q    ==>  P   C
 	//      / \       / \ / \       / \
 	//     B   C     A   B   C     A   B 
-	public void leftRotation(Node nodeP, Node parentNode){
+	public void leftRotation(TreeNode nodeP, TreeNode parentNode){
 		if(nodeP.getRightLeafNode() == null)
 			return;
-		Node nodeQ = nodeP.getRightLeafNode();
+		TreeNode nodeQ = nodeP.getRightLeafNode();
 		
 		nodeP.setRightLeafNode(nodeQ.getLeftLeafNode());
 		nodeQ.setLeftLeafNode(nodeP);
@@ -188,7 +188,7 @@ public class AVLTree extends BinaryTree {
 			this.rootNode = nodeQ;
 		}
 		else{
-			if(nodeP.value < parentNode.value){
+			if(nodeP.val < parentNode.val){
 				parentNode.setLeftLeafNode(nodeQ);
 			}
 			else{
@@ -204,7 +204,7 @@ public class AVLTree extends BinaryTree {
 	//   A   B         P   B             P   Y           P   Y   C      A   X Y   C
 	//      / \       / \ / \           / \             / \
 	//     X   Y     A   X   Y         A   X           A   X
-	public void leftAndRightRotation(Node node, Node parentNode){
+	public void leftAndRightRotation(TreeNode node, TreeNode parentNode){
 		leftRotation(node.getLeftLeafNode(), parentNode);
 		rightRotation(node, parentNode);
 	}
@@ -216,7 +216,7 @@ public class AVLTree extends BinaryTree {
 	//       B   C         B   Q             X   Q       A   X   Q      A   X Y   C
 	//      / \           / \ / \               / \             / \
 	//     X   Y         X   Y   C             Y   C           Y   C
-	public void rightAndLeftRotation(Node node, Node parentNode){
+	public void rightAndLeftRotation(TreeNode node, TreeNode parentNode){
 		rightRotation(node.getRightLeafNode(), parentNode);
 		leftRotation(node, parentNode);
 	}

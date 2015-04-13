@@ -7,10 +7,16 @@ public class Human implements Whistle{
     public Human(String name) {
         this.name = name;
     }
+
+	@Override
+	public void whistle() {
+		System.out.printf("Human: %s!%n", name);
+		
+	}
  
-    public void whistle() {
+    /*public void whistle() {
         System.out.printf("Human: %s!%n", name);
-    }
+    }*/
     
 
 }

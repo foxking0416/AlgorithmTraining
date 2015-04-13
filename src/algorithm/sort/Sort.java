@@ -62,8 +62,8 @@ public class Sort {
 	
 	//Called by Merge Sort
 	private static void merge(final int[] array, int p, int q, int r){
-		int arrayFront[] = new int[q-p+2];
-		int arrayBack[] = new int[r-q + 1]; 
+		int arrayFront[] = new int[q-p+2];//include q
+		int arrayBack[] = new int[r-q + 1]; //not include q
 		
 		for(int i = 0 ; i < q - p + 1; i++){ // copy from p to q, include p and q
 			arrayFront[i] = array[i + p];
@@ -103,7 +103,7 @@ public class Sort {
 	
 	
 	public static void quickSort(final int[] array, int p, int r){
-		if(p>=r)
+		if(p >= r)
 			return;
 		
 		int q = partition(array, p, r);

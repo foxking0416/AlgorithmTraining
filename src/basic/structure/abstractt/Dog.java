@@ -8,10 +8,10 @@ public class Dog extends Animal{
 		System.out.print("Dog eat" + "\n");
 	}
 	
-	@Override
+	/*@Override
 	public void walk(){
 		
 		System.out.print("Dog walk" + "\n");
-	}
+	}*/
 	
 }

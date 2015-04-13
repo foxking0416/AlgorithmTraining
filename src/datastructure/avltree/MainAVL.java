@@ -1,6 +1,6 @@
 package datastructure.avltree;
 
-import datastructure.binarytree.Node;
+import datastructure.binarytree.TreeNode;
 
 public class MainAVL {
 	public static void main(String[] args) {
@@ -17,11 +17,11 @@ public class MainAVL {
 	//                                                                    \
 	//                                                                     5
 		AVLTree tree = new AVLTree();
-		Node rootNode = new Node(1);
-		Node node1 = new Node(2);
-		Node node2 = new Node(3);
-		Node node3 = new Node(4);
-		Node node4 = new Node(5);
+		TreeNode rootNode = new TreeNode(1);
+		TreeNode node1 = new TreeNode(2);
+		TreeNode node2 = new TreeNode(3);
+		TreeNode node3 = new TreeNode(4);
+		TreeNode node4 = new TreeNode(5);
 		tree.insert(rootNode);
 		tree.insert(node1);
 		tree.insert(node2);

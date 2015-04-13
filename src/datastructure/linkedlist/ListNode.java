@@ -1,14 +1,14 @@
 package datastructure.linkedlist;
 
-import datastructure.binarytree.Node;
+import datastructure.binarytree.TreeNode;
 
-public class LinkedListNode extends Node {
+public class ListNode extends TreeNode {
 
-	public LinkedListNode next = null;
+	public ListNode next = null;
 //	private LinkedListNode headNode;
 
 	
-	public LinkedListNode(int v) {
+	public ListNode(int v) {
 		super(v);
 		
 //		if(headNode == null){
@@ -18,8 +18,8 @@ public class LinkedListNode extends Node {
 	}
 	
 	public void push(int v){
-		LinkedListNode newNode = new LinkedListNode(v);
-		LinkedListNode n = this;
+		ListNode newNode = new ListNode(v);
+		ListNode n = this;
 		while(n.next != null){
 			n = n.next;
 		}
@@ -28,13 +28,13 @@ public class LinkedListNode extends Node {
 		
 	}
 	
-	public LinkedListNode deleteNode(LinkedListNode head, int d){
-		LinkedListNode n = head;
-		if(n.value == d)
+	public ListNode deleteNode(ListNode head, int d){
+		ListNode n = head;
+		if(n.val == d)
 			return head.next;
 		
 		while(n.next != null){
-			if(n.next.value == d){
+			if(n.next.val == d){
 				n.next = n.next.next;
 				return head;
 			}
